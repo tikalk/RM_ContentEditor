@@ -10,10 +10,7 @@ pipeline
     }
     agent
     {
-        docker
-        {
-            image 'node'
-        }
+        label "linux-host-slave"
     }
     stages
     {
