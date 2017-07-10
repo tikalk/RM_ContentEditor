@@ -20,17 +20,17 @@
 
 <script>
     const iframe = document.querySelector('iframe').contentWindow;
-    const message = JSON.stringify({
+    const message = {
         setContent: {
             title: 'this is my title'
         }
-    });
+    };
 
     window.addEventListener('message', function({ data }){
-        if(data) {
-            const message = JSON.parse(event.data);
+        const { onSave } = data;
 
-            console.log(`Message from iFrame ${message}`);
+        if(onSave) {
+            console.log(`Message from iFrame`, onSave);
         }
 
     }, false);

@@ -3,9 +3,9 @@ import myStore from './store';
 const initPubSub = () => {
     //respond to events
   window.addEventListener('message', function({ data }){
-  	console.log(`Message received ${data}`);
+  	console.log(`Message received`, data);
 
-    const { setContent } = JSON.parse(data);
+    const { setContent } = data;
 
     setContent && myStore.setItem(setContent);
   }, false);

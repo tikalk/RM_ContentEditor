@@ -13,7 +13,7 @@ to post message to the iframe:
 ```js
 const iframe = document.querySelector('iframe').contentWindow;
 
-const message = JSON.stringify({
+const message = {
     setContent: {
         title: 'this is my title',
         description: '### markdown syntax',
@@ -25,7 +25,7 @@ const message = JSON.stringify({
         environments:  ['Node', 'JavaScript', 'Docker', 'Java'],
         edit: true
     }
-});
+};
 
 iframe.postMessage(message, '*');
 ```
@@ -35,7 +35,7 @@ to intercept message from iframe:
 ```js
 window.addEventListener('message', function({ data }){
     if(data) {
-        const { onSave } = JSON.parse(event.data);
+        const { onSave } = event.data;
 
         console.log(`Message to save from iFrame ${onSave}`);
     }
