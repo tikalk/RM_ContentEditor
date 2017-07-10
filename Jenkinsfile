@@ -35,6 +35,13 @@ pipeline
                 sh("sudo pip install awscli")
             }
         }
+        stage('which AWS hack')
+        {
+            steps
+            {
+                sh("which aws")
+            }
+        }
          stage('NPM install')
         {
             steps
