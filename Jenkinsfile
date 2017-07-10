@@ -59,6 +59,16 @@ pipeline
                 sh("docker push 329054710135.dkr.ecr.eu-central-1.amazonaws.com/rm_contenteditor:latest")
             }
         }
+        stage ('Deploy to K8S') 
+        {
+            steps
+            {
+                sh(script: """
+                ./kubectl apply -f deployment.yaml --kubeconfig=\$(pwd)/kconfig --namespace fuze
+                ./kubectl get pods --namespace fuze -l app=contenteditor &> /dev/null
+                """, returnStatus: false, returnStdout: false)
+            }
+        }
     }
     post
     {
