@@ -49,7 +49,14 @@ pipeline
         {
             steps
             {
-                sh("docker build -t rm_contenteditor .")
+                sh("docker build -t 329054710135.dkr.ecr.eu-central-1.amazonaws.com/rm_contenteditor .")
+            }
+        }
+        stage('Docker ECR Login')
+        {
+            steps
+            {
+                sh("`aws ecr get-login --no-include-email`")
             }
         }
         stage('Docker Push')
