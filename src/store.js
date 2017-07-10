@@ -1,10 +1,10 @@
-import { action, computed, observable } from "mobx";
+import { observable, action } from 'mobx';
 
 class Store {
-    @observable title;
-    @observable description;
+    @observable title = '';
+    @observable description = '';
     @observable stages = [];
-    @observable enviorment;
+    @observable enviorment = '';
 
     @action setItem = ({
        title = this.title,
@@ -19,6 +19,14 @@ class Store {
     @action addStage = (stage = new Stage()) => {
       this.stages.push(stage);
     };
+
+    @action removeStage = (stage) => {
+        this.stages.remove(stage);
+    };
+
+    toJson() {
+        return JSON.stringify(this, null, 2);
+    }
 }
 
 class Stage {
