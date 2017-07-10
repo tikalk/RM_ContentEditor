@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<iframe id="myIframe" src="http://localhost:3000/" frameborder="0"></iframe>
+
+<script>
+    const iframe = document.getElementById('myIframe').contentWindow;
+    const message = JSON.stringify({
+        setContent: {
+            title: 'this is my title'
+        }
+    });
+
+    window.addEventListener('message', function(event){
+        console.log('message received:  ' + event.data,event);
+    }, false);
+</script>
+</body>
+</html>

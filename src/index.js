@@ -5,5 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import App from './App';
 import store from './store';
+import { initPubSub } from './iframePubSub';;
+
+initPubSub();
 
 ReactDOM.render(<App store={store} />, document.getElementById('root'));
