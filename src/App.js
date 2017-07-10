@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import ReactMarkdown from 'react-markdown';
 
 import {
     Form,
@@ -48,6 +49,8 @@ function App({ store }) {
                         onChange={e => store.setItem({ description: e.target.value})}
                         rows="10"
                     />}
+
+                    {store.tab === 'preview' && <ReactMarkdown source={store.description}/>}
                 </CardBlock>
             </Card>
 
