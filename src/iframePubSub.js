@@ -14,11 +14,11 @@ const initPubSub = () => {
 };
 
 const onSave = (payload) => {
-    const o = {
+    const message = JSON.stringify({
         onSave: payload
-    };
+    });
 
-  window.parent.postMessage(JSON.stringify(o), '*');
+  window.parent.postMessage(message, '*');
 };
 
 export { initPubSub, onSave };
