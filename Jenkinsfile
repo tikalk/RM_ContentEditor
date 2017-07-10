@@ -60,7 +60,7 @@ pipeline
         {
             steps
             {
-                sh("eval '\$(/usr/local/bin/aws ecr get-login --no-include-email)'")
+                sh("eval '\$( /home/ubuntu/.local/bin/aws ecr get-login --no-include-email)'")
             }
         }
         stage('Docker Push')
