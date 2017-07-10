@@ -31,18 +31,18 @@ pipeline
                 ])
             }
         }
-        stage('NPM install')
+        stage('Docker Build')
         {
             steps
             {
-                sh("npm install")
+                sh("docker build -t rm_contenteditor .")
             }
         }
-        stage('NPM build')
+        stage('Docker Push')
         {
             steps
             {
-                sh("nohup npm start &")
+                sh("docker push 329054710135.dkr.ecr.eu-central-1.amazonaws.com/rm_contenteditor:latest")
             }
         }
     }
