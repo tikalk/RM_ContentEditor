@@ -48,18 +48,42 @@ class Store {
 }
 
 class Stage {
-    @observable url;
-    @observable mission;
+    @observable resources = [];
+    @observable mission = '';
+    @observable tab = 'description';
 
-    constructor({ url = '', mission = '' } = {}) {
-        this.url = url;
+    constructor({ resources = this.resources, mission = this.mission } = {}) {
+        this.resources = resources;
         this.mission = mission;
     }
 
-    @action setItem = ({ url = this.url, mission = this.mission } = {}) => {
-        this.url = url;
+    @action setItem = ({ mission = this.mission } = {}) => {
         this.mission = mission;
+    };
+
+    @action addResource = (url = new Url()) => {
+        this.resources.push(url);
+    };
+
+    @action removeResource = (url) => {
+        this.resources.remove(url);
+    };
+
+    @action setTab = tab => {
+        this.tab = tab
+    };
+}
+
+class Url {
+    @observable url = '';
+
+    constructor({ url = this.url } = {}) {
+        this.url = url;
     }
+
+    @action setItem = ({ url = this.url } = {}) => {
+        this.url = url;
+    };
 }
 
 export default new Store();

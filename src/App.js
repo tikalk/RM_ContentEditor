@@ -1,21 +1,23 @@
-import React from 'react';
-import { observer } from 'mobx-react';
-import ReactMarkdown from 'react-markdown';
+import React from "react";
+import { observer } from "mobx-react";
+import ReactMarkdown from "react-markdown";
 
 import {
-    Form,
-    FormGroup,
     Button,
-    Input,
-    Label,
-    Container,
     Card,
     CardBlock,
     CardHeader,
+    Container,
+    Form,
+    FormGroup,
+    Input,
+    Label,
     Nav,
     NavItem,
     NavLink
-} from 'reactstrap';
+} from "reactstrap";
+
+import Stage from './Stage';
 
 function App({ store }) {
     return <Container className={!store.edit && 'disabled'}>
@@ -24,7 +26,7 @@ function App({ store }) {
                 <Label>Title:</Label>
                 <Input
                     value={store.title}
-                    onChange={e => store.setItem({ title: e.target.value})}
+                    onChange={e => store.setItem({ title: e.target.value })}
                 />
             </FormGroup>
 
@@ -46,36 +48,18 @@ function App({ store }) {
                     {store.tab === 'description' && <Input
                         type="textarea"
                         value={store.description}
-                        onChange={e => store.setItem({ description: e.target.value})}
+                        onChange={e => store.setItem({ description: e.target.value })}
                         rows="10"
                     />}
 
-                    {store.tab === 'preview' && <ReactMarkdown source={store.description}/>}
+                    {store.tab === 'preview' && <ReactMarkdown source={store.description} />}
                 </CardBlock>
             </Card>
 
             <FormGroup tag="fieldset">
                 <legend><Button type="button" onClick={e => store.addStage()}> + </Button> Stages</legend>
 
-                {store.stages.map((stage, index) => {
-                    const { url, mission, setItem} = stage;
-
-                    return <Card className="mb-3" key={index}>
-                        <CardBlock>
-                            <button type="button" onClick={e => store.removeStage(stage)} className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-                            <FormGroup>
-                                <Label>Url</Label>
-                                <Input value={url} onChange={e => setItem({url: e.target.value})}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label>Mission</Label>
-                                <Input type="textarea" value={mission} onChange={e => setItem({mission: e.target.value})}/>
-                            </FormGroup>
-                        </CardBlock>
-                    </Card>
-                })}
+                {store.stages.map((stage, index) => <Stage store={store} stage={stage} key={index} />)}
             </FormGroup>
 
             <FormGroup tag="fieldset">
