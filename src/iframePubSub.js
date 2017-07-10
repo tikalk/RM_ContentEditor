@@ -1,30 +1,19 @@
-const myState = import "myState";
+const myStore = import "store";
 
-const attachPubSub() => {
+export const initPubSub() => {
     //respond to events
   window.addEventListener('message',function(event){
   	console.log('message received:  ' + event.data,event);
     var eventData = JSON.parse(event.data);
-    if(eventData['onSave']){
-        event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
-    }
-    if(eventData['onCompLoad']){
-        event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
-    }
-    if(eventData['setContentReadyOnly']){
-        event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
-    }
-    if(eventData['setContentEditable']){
-        event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
+    if(eventData['setContent']){
+      //set store to edit
+        myStore.setItem(eventData);
+        event.source.postMessage('EVENT FIRED! @content editor, setContent fired: ' + event.origin,event.origin);
     }
   },false);
-
 }
 
-// using post message :
-//
-// events are :
-// - is content editable
-// - on step added
-// - on save
-// - onCompLoad
+
+export const onSave(payload) => {
+  window.parent.postMessage('contentEditor:onSave',payload);
+}
