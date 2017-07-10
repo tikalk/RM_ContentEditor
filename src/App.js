@@ -56,7 +56,7 @@ function App({ store }) {
             <FormGroup tag="fieldset">
                 <legend>Environments</legend>
 
-                {store.environments.map((environment) => <FormGroup check>
+                {store.environments.map((environment, index) => <FormGroup check key={index}>
                     <Label check>
                         <Input type="radio" name='environment' onClick={e => store.setItem({ environment })} />{' '}
                         {environment}
