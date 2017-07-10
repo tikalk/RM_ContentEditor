@@ -48,36 +48,9 @@ pipeline
             {
                 sh("npm run build")
             }
-        }
-	stage('Docker Build')
-        {
             steps
             {
-                sh("docker build -t 329054710135.dkr.ecr.eu-central-1.amazonaws.com/rm_contenteditor .")
-            }
-        }
-        stage('Docker ECR Login')
-        {
-            steps
-            {
-                sh("eval '\$( /home/ubuntu/.local/bin/aws ecr get-login --no-include-email)'")
-            }
-        }
-        stage('Docker Push')
-        {
-            steps
-            {
-                sh("docker push 329054710135.dkr.ecr.eu-central-1.amazonaws.com/rm_contenteditor:latest")
-            }
-        }
-        stage ('Deploy to K8S') 
-        {
-            steps
-            {
-                sh(script: """
-                ./kubectl apply -f deployment.yaml --kubeconfig=\$(pwd)/kconfig --namespace fuze
-                ./kubectl get pods --namespace fuze -l app=contenteditor &> /dev/null
-                """, returnStatus: false, returnStdout: false)
+                sh("npm run deploy")
             }
         }
     }
