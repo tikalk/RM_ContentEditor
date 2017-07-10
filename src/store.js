@@ -1,31 +1,43 @@
-import { observable, action } from 'mobx';
+import { action, observable } from "mobx";
 
 class Store {
     @observable title = '';
     @observable description = '';
     @observable stages = [];
-    @observable enviorment = '';
+    @observable environment = '';
+    @observable environments = ['Node', 'JavaScript', 'Docker', 'Java'];
+    @observable edit = true;
 
     @action setItem = ({
        title = this.title,
        description = this.description,
-       enviorment = this.enviorment
-   }) => {
+       environment = this.environment,
+       environments = this.environments,
+       stages = this.stages
+   } = {}) => {
         this.title = title;
         this.description = description;
-        this.enviorment = enviorment;
+        this.environment = environment;
+        this.environments = environments;
+        this.stages = stages;
     };
 
     @action addStage = (stage = new Stage()) => {
-      this.stages.push(stage);
+        this.stages.push(stage);
     };
 
     @action removeStage = (stage) => {
         this.stages.remove(stage);
     };
 
+    @action setEdit = (edit = this.edit) => this.edit = edit;
+
     toJson() {
         return JSON.stringify(this, null, 2);
+    }
+
+    save() {
+        // dispach(this);
     }
 }
 
@@ -33,7 +45,12 @@ class Stage {
     @observable url;
     @observable mission;
 
-    constructor({ url = '', mission = ''}) {
+    constructor({ url = '', mission = '' } = {}) {
+        this.url = url;
+        this.mission = mission;
+    }
+
+    @action setItem = ({ url = this.url, mission = this.mission } = {}) => {
         this.url = url;
         this.mission = mission;
     }
