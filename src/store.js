@@ -1,4 +1,5 @@
-import { action, observable, computed } from "mobx";
+import { action, observable } from "mobx";
+import { onSave } from './iframePubSub';
 
 class Store {
     @observable title = '';
@@ -42,7 +43,7 @@ class Store {
     }
 
     save() {
-        // dispach(this);
+        onSave(this);
     }
 }
 

@@ -1,19 +1,22 @@
-const myStore = import "store";
+import myStore from './store';
 
-export const initPubSub() => {
+const initPubSub = () => {
     //respond to events
-  window.addEventListener('message',function(event){
-  	console.log('message received:  ' + event.data,event);
-    var eventData = JSON.parse(event.data);
-    if(eventData['setContent']){
-      //set store to edit
-        myStore.setItem(eventData);
-        event.source.postMessage('EVENT FIRED! @content editor, setContent fired: ' + event.origin,event.origin);
-    }
-  },false);
-}
+  window.addEventListener('message', function({ data }){
+  	console.log(`Message received ${data}`);
 
+    const { setContent } = JSON.parse(data);
 
-export const onSave(payload) => {
-  window.parent.postMessage('contentEditor:onSave',payload);
-}
+    setContent && myStore.setItem(setContent);
+  }, false);
+};
+
+const onSave = (payload) => {
+    const message = JSON.stringify({
+        onSave: payload
+    });
+
+  window.parent.postMessage(message, '*');
+};
+
+export { initPubSub, onSave };
