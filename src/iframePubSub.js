@@ -1,9 +1,20 @@
+const myState = import "myState";
+
 const attachPubSub() => {
     //respond to events
-  window.addEventListener('message',function(event) {
+  window.addEventListener('message',function(event){
   	console.log('message received:  ' + event.data,event);
     var eventData = JSON.parse(event.data);
     if(eventData['onSave']){
+        event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
+    }
+    if(eventData['onCompLoad']){
+        event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
+    }
+    if(eventData['setContentReadyOnly']){
+        event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
+    }
+    if(eventData['setContentEditable']){
         event.source.postMessage('EVENT FIRED! @content editor, started from: ' + event.origin,event.origin);
     }
   },false);
