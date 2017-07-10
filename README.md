@@ -11,6 +11,8 @@
 to post message to the iframe:
 
 ```js
+const iframe = document.querySelector('iframe').contentWindow;
+
 const message = JSON.stringify({
     setContent: {
         title: 'this is my title',
@@ -24,6 +26,8 @@ const message = JSON.stringify({
         edit: true
     }
 });
+
+iframe.postMessage(message, '*');
 ```
 
 to intercept message from iframe:
