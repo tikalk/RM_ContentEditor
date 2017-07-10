@@ -1,15 +1,6 @@
-FROM node
+FROM nginx
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+COPY build/. /usr/share/nginx/html
 
-# Install app dependencies
-COPY package.json /usr/src/app/
-RUN npm install
-
-# Bundle app source
-COPY . /usr/src/app
-
-EXPOSE 3000
-CMD [ "npm", "start" ]`
+EXPOSE 80
+CMD [ "service", "nginx",  "start" ]`

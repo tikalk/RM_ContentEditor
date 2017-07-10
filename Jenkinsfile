@@ -31,7 +31,21 @@ pipeline
                 ])
             }
         }
-        stage('Docker Build')
+        stage('NPM install')
+        {
+            steps
+            {
+                sh("npm install")
+            }
+        }
+        stage('NPM run build')
+        {
+            steps
+            {
+                sh("npm run build")
+            }
+        }
+	stage('Docker Build')
         {
             steps
             {
