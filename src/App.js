@@ -51,7 +51,6 @@ function App({ store }) {
                 </CardBlock>
             </Card>
 
-
             <FormGroup tag="fieldset">
                 <legend><Button type="button" onClick={e => store.addStage()}> + </Button> Stages</legend>
 
@@ -60,17 +59,17 @@ function App({ store }) {
 
                     return <Card className="mb-3" key={index}>
                         <CardBlock>
-                       <Button type="button" onClick={e => store.removeStage(stage)} className="close"> &times; </Button>
+                            <button type="button" onClick={e => store.removeStage(stage)} className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-                        <FormGroup>
-                            <Label>Url</Label>
-                            <Input value={url} onChange={e => setItem({url: e.target.value})}/>
-                        </FormGroup>
+                            <FormGroup>
+                                <Label>Url</Label>
+                                <Input value={url} onChange={e => setItem({url: e.target.value})}/>
+                            </FormGroup>
 
-                        <FormGroup>
-                            <Label>Mission</Label>
-                            <Input type="textarea" value={mission} onChange={e => setItem({mission: e.target.value})}/>
-                        </FormGroup>
+                            <FormGroup>
+                                <Label>Mission</Label>
+                                <Input type="textarea" value={mission} onChange={e => setItem({mission: e.target.value})}/>
+                            </FormGroup>
                         </CardBlock>
                     </Card>
                 })}
