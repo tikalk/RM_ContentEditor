@@ -42,7 +42,7 @@ pipeline
         {
             steps
             {
-                sh("npm start")
+                sh("nohup npm start &")
             }
         }
     }
