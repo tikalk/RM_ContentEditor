@@ -1,24 +1,38 @@
-import React, { Component } from 'react';
-import { Button } from 'reactstrap';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { observer } from 'mobx-react';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+import { Form, FormGroup, Button, Input, TextArea, Label, Container } from 'reactstrap';
 
-          <Button>Click Me</Button>
-        </p>
-      </div>
-    );
-  }
+function App({ store }) {
+    return <Container>
+        <Form onSubmit={e => e.preventDefault()}>
+            <FormGroup>
+                <Label>Title:</Label>
+                <Input
+                    value={store.title}
+                    onChange={e => store.setItem({ title: e.target.value})}
+                />
+            </FormGroup>
+
+            <FormGroup>
+                <Label>Desciption:</Label>
+                <Input
+                    type="textarea"
+                    value={store.description}
+                    onChange={e => store.setItem({ description: e.target.value})}
+                />
+            </FormGroup>
+
+            <FormGroup>
+                <Button type="button"> + </Button>
+                <Label>Stages</Label>
+            </FormGroup>
+
+            <pre>
+                {store.toJson()}
+            </pre>
+        </Form>
+    </Container>
 }
 
-export default App;
+export default observer(App);
