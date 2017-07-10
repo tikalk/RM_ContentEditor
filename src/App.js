@@ -7,11 +7,17 @@ import {
     Button,
     Input,
     Label,
-    Container
+    Container,
+    Card,
+    CardBlock,
+    CardHeader,
+    Nav,
+    NavItem,
+    NavLink
 } from 'reactstrap';
 
 function App({ store }) {
-    return <Container>
+    return <Container className={!store.edit && 'disabled'}>
         <Form onSubmit={e => e.preventDefault()}>
             <FormGroup>
                 <Label>Title:</Label>
@@ -21,37 +27,54 @@ function App({ store }) {
                 />
             </FormGroup>
 
-            <FormGroup>
-                <Label>Desciption:</Label>
-                <Input
-                    type="textarea"
-                    value={store.description}
-                    onChange={e => store.setItem({ description: e.target.value})}
-                />
+            <Card className="mb-3">
+                <CardHeader>
+                    <Nav tabs className="card-header-tabs">
+                        <NavItem><NavLink
+                            href="#"
+                            className={store.tab === 'description' && 'active'}
+                            onClick={e => store.setTab('description')}>Description</NavLink></NavItem>
+                        <NavItem><NavLink
+                            href="#"
+                            className={store.tab === 'preview' && 'active'}
+                            onClick={e => store.setTab('preview')}>Preview</NavLink></NavItem>
+                    </Nav>
+                </CardHeader>
+
+                <CardBlock>
+                    {store.tab === 'description' && <Input
+                        type="textarea"
+                        value={store.description}
+                        onChange={e => store.setItem({ description: e.target.value})}
+                        rows="10"
+                    />}
+                </CardBlock>
+            </Card>
+
+
+            <FormGroup tag="fieldset">
+                <legend><Button type="button" onClick={e => store.addStage()}> + </Button> Stages</legend>
+
+                {store.stages.map((stage, index) => {
+                    const { url, mission, setItem} = stage;
+
+                    return <Card className="mb-3" key={index}>
+                        <CardBlock>
+                       <Button type="button" onClick={e => store.removeStage(stage)} className="close"> &times; </Button>
+
+                        <FormGroup>
+                            <Label>Url</Label>
+                            <Input value={url} onChange={e => setItem({url: e.target.value})}/>
+                        </FormGroup>
+
+                        <FormGroup>
+                            <Label>Mission</Label>
+                            <Input type="textarea" value={mission} onChange={e => setItem({mission: e.target.value})}/>
+                        </FormGroup>
+                        </CardBlock>
+                    </Card>
+                })}
             </FormGroup>
-
-            <FormGroup>
-                <Button type="button" onClick={e => store.addStage()}> + </Button>
-                <Label>Stages</Label>
-            </FormGroup>
-
-            {store.stages.map((stage, index) => {
-                const { url, mission, setItem} = stage;
-
-                return <FormGroup tag="fieldset" key={index}>
-                    <Button onClick={e => store.removeStage(stage)}> - </Button>
-
-                    <FormGroup>
-                        <Label>Url</Label>
-                        <Input value={url} onChange={e => setItem({url: e.target.value})}/>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label>Mission</Label>
-                        <Input type="textarea" value={mission} onChange={e => setItem({mission: e.target.value})}/>
-                    </FormGroup>
-                </FormGroup>
-            })}
 
             <FormGroup tag="fieldset">
                 <legend>Environments</legend>
@@ -73,7 +96,6 @@ function App({ store }) {
             <pre className="bg-faded p-2 rounded">
                  <code>{store.toJson()}</code>
             </pre>
-
         </Form>
     </Container>
 }

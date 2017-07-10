@@ -6,7 +6,8 @@ class Store {
     @observable stages = [];
     @observable environment = '';
     @observable environments = ['Node', 'JavaScript', 'Docker', 'Java'];
-    @observable edit = true;
+    @observable edit = false;
+    @observable tab = 'description';
 
     @action setItem = ({
        title = this.title,
@@ -31,6 +32,10 @@ class Store {
     };
 
     @action setEdit = (edit = this.edit) => this.edit = edit;
+
+    @action setTab = tab => {
+        this.tab = tab
+    };
 
     toJson() {
         return JSON.stringify(this, null, 2);
