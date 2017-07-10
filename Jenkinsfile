@@ -35,13 +35,6 @@ pipeline
                 sh("sudo pip install awscli")
             }
         }
-        stage('which AWS hack')
-        {
-            steps
-            {
-                sh("which aws")
-            }
-        }
          stage('NPM install')
         {
             steps
@@ -67,7 +60,7 @@ pipeline
         {
             steps
             {
-                sh("eval '\$(aws ecr get-login --no-include-email)'")
+                sh("eval '\$(/usr/local/bin/aws ecr get-login --no-include-email)'")
             }
         }
         stage('Docker Push')
